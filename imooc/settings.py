@@ -103,9 +103,9 @@ DATABASES = {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'imooc',
         'USER': 'root',
-        'PASSWORD': 'root',
-        'HOST': 'mysql',
-        'PORT': '3306',
+        'PASSWORD': '数据库密码',
+        'HOST': '127.0.0.1',
+        'PORT': 3306,
     }
 }
 
@@ -158,3 +158,38 @@ EMAIL_HOST_USER = '10581290@qq.com'
 EMAIL_HOST_PASSWORD = 'scdxhwjinajgbjjc'
 EMAIL_USE_TLS = True
 EMAIL_FROM = '10581290@qq.com'
+
+
+DEBUG = True
+INTERNAL_IPS = ['127.0.0.1']
+ALLOWED_HOSTS += INTERNAL_IPS
+ALLOWED_HOSTS.append('localhost')
+
+# 重置 setting 里的 STATIC_ROOT 配置
+STATIC_ROOT = ''
+
+# static 目录配置
+# 如果 DEBUG 为 False 这里就会失效，需要用 NGIX 代理
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, 'static'),
+]
+
+INSTALLED_APPS.append('debug_toolbar')
+MIDDLEWARE.append('debug_toolbar.middleware.DebugToolbarMiddleware')
+
+# 请按照你开发时本机的数据库名字，密码，端口填写
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'imooc',
+        'USER': 'root',
+        'PASSWORD': 'atguigu',
+        'HOST': '127.0.0.1',
+    }
+}
+
+def show_toolbar(request):
+    return True
+SHOW_TOOLBAR_CALLBACK = show_toolbar
+
+DEBUG_TOOLBAR_CONFIG = {  'JQUERY_URL' : r"http://code.jquery.com/jquery-2.1.1.min.js"}
